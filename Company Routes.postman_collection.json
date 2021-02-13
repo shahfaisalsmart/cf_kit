@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "db8ce98c-6d85-44b6-90ac-481c50b551db",
+		"name": "Company Routes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Company setting",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamlvY29tcGFueUBqaW8uY29tIiwiYWNjb3VudF90eXBlIjoiQ2xpZW50In0sImlhdCI6MTU5MzA4MzUwNn0.-T1WOZk6esqTvR7R12LEwCV0FPtURwH-LMwlLbO34pE",
+						"type": "text"
+					},
+					{
+						"key": "id",
+						"value": "5ef484c08ee3f25d34e1d4bc",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "twitter_id",
+						"value": "www.jioTwitter.co.in",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/company/setting",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"company",
+						"setting"
+					]
+				},
+				"description": "for the company setting."
+			},
+			"response": []
+		},
+		{
+			"name": "Company Descriptrion",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamlvY29tcGFueUBqaW8uY29tIiwiYWNjb3VudF90eXBlIjoiQ2xpZW50In0sImlhdCI6MTU5MzA4MzUwNn0.-T1WOZk6esqTvR7R12LEwCV0FPtURwH-LMwlLbO34pE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/company/companyDescription?_id=5ef484c08ee3f25d34e1d4bc",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"company",
+						"companyDescription"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5ef484c08ee3f25d34e1d4bc"
+						}
+					]
+				},
+				"description": "This routes is GET router for the Company Description."
+			},
+			"response": []
+		},
+		{
+			"name": "Company information",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamlvY29tcGFueUBqaW8uY29tIiwiYWNjb3VudF90eXBlIjoiQ2xpZW50In0sImlhdCI6MTU5MzA4MzUwNn0.-T1WOZk6esqTvR7R12LEwCV0FPtURwH-LMwlLbO34pE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"_id\" :\"5ef484c08ee3f25d34e1d4bc\",\n    \"twitter_id\" : \"www.jioTwitter232.co.in\",\n    \"facebook_id\" : \"www.jioFacebook.co.in\",\n    \"gmail_id\": \"mukeshAmbani11w23@gmail.com\",\n    \"linkedin_id\" : \"www.jioLinkedIn.co.in\",\n    \"skype_id\": \"www.jioskyid.co.in\",\n    \"subscription\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/company/companyInfo",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"company",
+						"companyInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Company information",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamlvY29tcGFueUBqaW8uY29tIiwiYWNjb3VudF90eXBlIjoiQ2xpZW50In0sImlhdCI6MTU5MzA4MzUwNn0.-T1WOZk6esqTvR7R12LEwCV0FPtURwH-LMwlLbO34pE"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"_id\" :\"5ef484c08ee3f25d34e1d4bc\",\n    \"twitter_id\" : \"www.jioTwitter232.co.in\",\n    \"facebook_id\" : \"www.jioFacebook.co.in\",\n    \"gmail_id\": \"mukeshAmbani11w23@gmail.com\",\n    \"linkedin_id\" : \"www.jioindiaLinkedIn.co.in\",\n    \"skype_id\": \"www.jioskyid.co.in\",\n    \"subscription\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/company/companyInfo",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"company",
+						"companyInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "About Company",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamlvY29tcGFueUBqaW8uY29tIiwiYWNjb3VudF90eXBlIjoiQ2xpZW50In0sImlhdCI6MTU5MzA4MzUwNn0.-T1WOZk6esqTvR7R12LEwCV0FPtURwH-LMwlLbO34pE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "logo",
+							"type": "file",
+							"src": "/Users/faisal/Downloads/Signature.jpeg"
+						},
+						{
+							"key": "_id",
+							"value": "5ef484c08ee3f25d34e1d4bc",
+							"type": "text"
+						},
+						{
+							"key": "additional_information",
+							"value": "we are hiring in for you in different different role.",
+							"type": "text"
+						},
+						{
+							"key": "company_video",
+							"value": "officialVideo.mp4",
+							"type": "text"
+						},
+						{
+							"key": "industry",
+							"value": "Telecom",
+							"type": "text"
+						},
+						{
+							"key": "website",
+							"value": "www.jioindia.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/company/aboutCompany",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"company",
+						"aboutCompany"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Company Billing information",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiamlvY29tcGFueUBqaW8uY29tIiwiYWNjb3VudF90eXBlIjoiQ2xpZW50In0sImlhdCI6MTU5MzA4MzUwNn0.-T1WOZk6esqTvR7R12LEwCV0FPtURwH-LMwlLbO34pE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "localhost:3000/company/billingInformation",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"company",
+						"billingInformation"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
