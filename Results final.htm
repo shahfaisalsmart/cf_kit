@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)https://skillstrainer.in/moodle/pluginfile.php/3303/mod_scorm/content/2/story_content/report.html -->
+<html lang="en"><script id="allow-copy_script">(function agent() {
+    let unlock = false
+    document.addEventListener('allow_copy', (event) => {
+      unlock = event.detail.unlock
+    })
+
+    const copyEvents = [
+      'copy',
+      'cut',
+      'contextmenu',
+      'selectstart',
+      'mousedown',
+      'mouseup',
+      'mousemove',
+      'keydown',
+      'keypress',
+      'keyup',
+    ]
+    const rejectOtherHandlers = (e) => {
+      if (unlock) {
+        e.stopPropagation()
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation()
+      }
+    }
+    copyEvents.forEach((evt) => {
+      document.documentElement.addEventListener(evt, rejectOtherHandlers, {
+        capture: true,
+      })
+    })
+  })()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <title>Results</title>
+  <style>
+
+    body {
+      font-family: arial;
+      text-align: center;
+      font-size:10pt;
+    }
+
+    table {
+      border: 1px outset grey;
+    }
+
+    td, th {
+      border: 1px inset grey;
+    }
+
+    table.summary {
+      width: 600px;
+    }
+
+    table.questions  {
+      width: 100%;
+    }
+
+    td {
+      width: 12.5%;
+    }
+
+    th, h3 {
+      font-size:12pt;
+    }
+
+    h1, h2 {
+      font-size:14pt;
+    }
+
+    .correct {
+      color: #008800;
+    }
+
+    .incorrect {
+      color: #880000;
+    }
+
+    .neutral {
+      color: #000088;
+    }
+
+    .question {
+      text-align: left;
+      width: 46.25%;
+    }
+
+    .number {
+      font-size:10pt;
+      width: 3.75%;
+    }
+
+    .datetime {
+      font-size:10pt;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+  </style>
+<script>
+
+var strings = {}
+try {
+  strings = {
+    months: [
+      __MONTH_JAN__,
+      __MONTH_FEB__,
+      __MONTH_MAR__,
+      __MONTH_APR__,
+      __MONTH_MAY__,
+      __MONTH_JUN__,
+      __MONTH_JUL__,
+      __MONTH_AUG__,
+      __MONTH_SEP__,
+      __MONTH_OCT__,
+      __MONTH_NOV__,
+      __MONTH_DEC__
+    ],
+    dateTime: __DATE_TIME__,
+    studentScore: __STUDENT_SCORE__,
+    passScore: __PASSING_SCORE__,
+    courseResult: __COURSE_RESULT__,
+    question: __QUESTION__,
+    correctAnswer: __CORRECT_ANS__,
+    quizResult: __QUIZ_RESULT__,
+    studentAnswer: __STUDENT_ANS__,
+    pointsAwarded: __POINTS_AWARD__,
+    neutral: __NEUTRAL__,
+    correct: __CORRECT__,
+    incorrect: __INCORRECT__
+  };
+} catch (e) {
+  strings = {
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
+    dateTime: 'Date / Time',
+    studentScore: 'Student Score',
+    passingScore: 'Passing Score',
+    courseResult: 'Result',
+
+    question: 'Question',
+    correctAnswer: 'Correct Answer',
+    quizResult: 'Result',
+    studentAnswer: 'Student Answer',
+    pointsAwarded: 'Points Awarded',
+    neutral: 'Neutral',
+    correct: 'Correct',
+    incorrect: 'Incorrect'
+  };
+}
+
+var parentWnd = window.opener,
+    courseResults = parentWnd.g_oContentResults,
+    quizzes = parentWnd.g_listQuizzes,
+    printOptions = parentWnd.g_oPrintOptions,
+    quizOrder = printOptions.arrQuizzes,
+    mainQuiz = quizzes[printOptions.strMainQuizId];
+
+function displayHeader() {
+  var header = document.getElementById('header'),
+      userName = printOptions.strName
+      config = {
+        elName: 'div',
+        children: [
+          { elName: 'h1', text: mainQuiz.strQuizName},
+          { elName: 'h2', text: userName, enabled: userName != null && userName.length > 0},
+        ]
+      };
+
+  header.appendChild(createElFromDef(config));
+}
+
+function displayCourseSummary() {
+  var survey = printOptions.bSurvey,
+      showUserScore = !survey && printOptions.bShowUserScore,
+      showPassingScore = !survey && printOptions.bShowPassingScore,
+      showPassFail = !survey && printOptions.bShowShowPassFail,
+      studentScore = Number(mainQuiz.nPtScore),
+      passingScore = Number(mainQuiz.nPassingScore),
+      courseResult = (studentScore >= passingScore) ? 'Pass' : 'Fail',
+      currentDateTime = formatDate(courseResults.dtmFinished),
+      courseSummary = document.getElementById('courseSummary'),
+      config = {
+        elName: 'table',
+        attrs: [{ name: 'class', value: 'summary' }, { name: 'align', value: 'center' }],
+        children: [
+          { elName: 'tr',
+            children: [
+              { elName: 'th', text: strings.dateTime},
+              { elName: 'th', text: strings.studentScore, enabled: showUserScore},
+              { elName: 'th', text: strings.passingScore, enabled: showPassingScore},
+              { elName: 'th', text: strings.courseResult, enabled: showPassFail}
+          ]},
+          { elName: 'tr',
+            children: [
+              { elName: 'td',
+                children: [
+                  { elName: 'p', attrs: [{ name: 'class', value:'datetime' }], text: currentDateTime.date },
+                  { elName: 'p', attrs: [{ name: 'class', value:'datetime' }], text: currentDateTime.time }
+              ]},
+              { elName: 'td', text: studentScore, enabled: showUserScore },
+              { elName: 'td', text: passingScore, enabled: showPassingScore },
+              { elName: 'td', text: courseResult, enabled: showPassFail }
+          ]}
+        ]
+      };
+
+  courseSummary.appendChild(createElFromDef(config));
+}
+
+function displayQuizResults() {
+  for (var i = 0; i < quizOrder.length; i++) {
+    var quizId = quizOrder[i];
+    displayQuizResult(quizId);
+  }
+};
+
+function displayQuizResult(quizId) {
+  var i, resultsTable;
+      quiz = quizzes[quizId],
+      questionOrder = getQuestionOrder(quiz),
+      quizDiv = createQuizDiv(quiz),
+      quizReview = document.getElementById('quizReview');
+
+
+  quizReview.appendChild(quizDiv);
+  resultsTable = document.getElementById([ 'results-', quizId ].join(''));
+
+  for (i = 0; i < questionOrder.length; i++) {
+    var config = getQuestionConfig(quiz, questionOrder[i]);
+    resultsTable.appendChild(createElFromDef(config));
+  }
+};
+
+function createQuizDiv(quiz) {
+  var survey = printOptions.bSurvey;
+
+  return createElFromDef({
+    elName: 'div',
+    children: [
+      { elName: 'h3', text: quiz.strQuizName },
+      { elName: 'table',
+        attrs: [
+          { name: 'class', value: 'questions' },
+          { name: 'id', value: [ 'results-', quiz.strQuizId ].join('') }
+        ],
+        children: [
+          { elName: 'tr', children: [
+            { elName: 'th', text: '#' },
+            { elName: 'th', text: strings.question },
+            { elName: 'th', text: strings.correctAnswer, enabled: !survey},
+            { elName: 'th', text: strings.studentAnswer },
+            { elName: 'th', text: strings.quizResult, enabled: !survey },
+            { elName: 'th', text: strings.pointsAwarded, enabled: !survey }
+        ]}
+      ]}
+    ]
+  });
+};
+
+function createElFromDef(elDef) {
+  if (elDef.enabled === false) {
+    return null;
+  }
+
+  var el = createAndInitElement(elDef.elName, elDef.attrs, elDef.text);
+
+  if (elDef.children != null) {
+    for (var i = 0; i < elDef.children.length; i++) {
+      currEl = createElFromDef(elDef.children[i]);
+      if (currEl != null) {
+        el.appendChild(currEl);
+      }
+    }
+  }
+
+  return el;
+};
+
+function createAndInitElement(elementName, attrs, text) {
+  var el = document.createElement(elementName);
+
+  if (attrs != null) {
+    for (var i = 0; i < attrs.length; i++) {
+      var attr = attrs[i];
+      el.setAttribute(attr.name, attr.value);
+    }
+  }
+
+  if (text != null) {
+    el.appendChild(document.createTextNode(text));
+  }
+
+  return el;
+};
+
+function getQuestionOrder(quiz) {
+	var i, j,
+      questionOrder = [],
+      questions = quiz.arrQuestions;
+
+	if (questions != null && questions.length > 0)	{
+    // reset
+		if (questions[0].found) {
+			for (var i = 0; i < questions.length; i++) {
+				questions[i].found = false;
+			}
+		}
+
+		for (i = questions.length - 1; i >= 0; i--) {
+			var index = -1,
+			    maxQuestionNum = -1,
+          currQuestionNum;
+	
+			for (j = 0; j < questions.length; j++) {
+        currQuestionNum = Number(questions[j].nQuestionNumber);
+				if (!questions[j].found && currQuestionNum > maxQuestionNum) {
+					maxQuestionNum = currQuestionNum;
+					if (index >= 0) {
+						questions[index].found = false;
+					}
+					questions[j].found = true;
+					index = j;
+				}
+			}
+			questionOrder[i] = index;
+		}
+  }
+
+  return questionOrder;
+}
+
+function getQuestionConfig(quiz, questionIdx) {
+  var questions = quiz.arrQuestions,
+      question = questions[questionIdx],
+      survey = printOptions.bSurvey;
+
+  return {
+    elName: 'tr',
+    children: [
+      { elName: 'td', attrs: [{ name: 'class', value: 'number'}], text: question.nQuestionNumber },
+      { elName: 'td', attrs: [{ name: 'class', value: 'question'}], text: question.strDescription },
+      { elName: 'td', text: formatResponse(question.strCorrectResponse), enabled: !survey},
+      { elName: 'td', text: formatResponse(question.strUserResponse) },
+      { elName: 'td', attrs: [{ name: 'class', value: question.strStatus}], text: strings[question.strStatus], enabled: !survey },
+      { elName: 'td', text: question.nPoints, enabled: !survey }
+    ]
+  };
+};
+
+function formatResponse(response) {
+  return (response != null) ? response.replace(/\|#\|/g, ', ') : '&nbsp';
+}
+
+function formatDate(dtm) {
+	var hours = dtm.getHours(),
+      period = hours >= 12 ? 'pm' : 'am',
+      minutes = dtm.getMinutes().toString(),
+      month = strings.months[dtm.getMonth()],
+      date = dtm.getDate(),
+      year = dtm.getFullYear();
+
+	while (minutes.length < 2) {
+		minutes = '0' + minutes;
+	}
+
+  if (hours > 12) {
+    hours -= 12;
+  }
+	
+  return {
+    date: [ month, ' ', date, ', ', year ].join(''),
+    time: [ hours, ':', minutes, ' ', period ].join('')
+  }
+};
+
+function init() {
+  displayHeader();
+  displayCourseSummary();
+  if (printOptions.bShowQuizReview) {
+    displayQuizResults();
+  }
+}
+
+</script>
+
+</head>
+<body onload="init()" data-new-gr-c-s-check-loaded="14.988.0" data-gr-ext-installed="">
+  <div id="header"><div><h1>Assessment English_DEO</h1></div></div>
+  <p>&nbsp;</p>
+  <div id="courseSummary"><table class="summary" align="center"><tr><th>Date / Time</th><th>Student Score</th><th>Passing Score</th><th>Result</th></tr><tr><td><p class="datetime">December 19, 2020</p><p class="datetime">2:18 pm</p></td><td>96.66</td><td>80</td><td>Pass</td></tr></table></div>
+  <p>&nbsp;</p>
+  <div id="quizReview"><div><h3>Assessment English_DEO</h3><table class="questions" id="results-5xdboYpYbWj"><tr><th>#</th><th>Question</th><th>Correct Answer</th><th>Student Answer</th><th>Result</th><th>Points Awarded</th></tr><tr><td class="number">1</td><td class="question">Which of the following is the work of a data entry operator?</td><td>All of the above</td><td>All of the above</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">2</td><td class="question">To maintain correct quality standard, a data entry operator should:   </td><td>Enter data in the computer accurately</td><td>Enter data in the computer accurately</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">3</td><td class="question">What is the full form of SQL?</td><td>Structured Query Language</td><td>Structured Query Language</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">4</td><td class="question">Which data base system should be used for home or small office use?</td><td>Microsoft Access</td><td>Microsoft Access</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">5</td><td class="question">What is the full form of RDBMS?</td><td>Relational Database Management Systems</td><td>Relational Database Management Systems</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">6</td><td class="question">……………… refers to the alteration of data from one form to another</td><td>Data Conversion Services </td><td>Data Conversion Services </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">7</td><td class="question">……………………… can convert hardcopy into electronic formats which involves document scanning, indexing, conversion and archiving services for organisations.</td><td>OCR (Optical Character Recognition) Services </td><td>OCR (Optical Character Recognition) Services </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">8</td><td class="question">Which of the following is the benefit of help desk?</td><td>It improves customer’s service perception and satisfaction </td><td>It improves customer’s service perception and satisfaction </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">9</td><td class="question">………………..includes purchase or sale orders, administration documents, survey forms, insurance claims, bankers cheques processing etc. </td><td>Form Processing Services </td><td>Form Processing Services </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">10</td><td class="question"> Out of the options given below which is a fraudulent practice?                           
+(i) Tampering, falsification and false commitments on receipts and settlement letters, (ii)Sharing of data with another organization (iii)Overwriting of cheques, receipt books, drafts and other negotiable instruments</td><td>Only option (ii) and (iii)</td><td>Only option (ii) and (iii)</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">11</td><td class="question"> ……………………are the activities which create interruption at the workplace. </td><td>Time robbers</td><td>Time robbers</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">12</td><td class="question"> As a DEO, you need to take all measures required for information security which includes:</td><td>Returning or destroying hard copies of the data received from the customer</td><td>Returning or destroying hard copies of the data received from the customer</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">13</td><td class="question"> Which of the following scenario cannot be considered as breach of code of ethics for a DEO?</td><td>Identifying yourself as a representative of your company </td><td>Identifying yourself as a representative of your company </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">14</td><td class="question"> As a part of code of conduct, a DEO must avoid:</td><td>Misusing the resources</td><td>Misusing the resources</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">15</td><td class="question"> Which of the following statements about deliverables related to DEO is correct?        
+(i) Deliverables are the basic output of what Customer Service Representative does. 
+(ii) Deliverable comprises of accurate, standardized and free of error information.  </td><td>Both statements (i) and (ii) are correct</td><td>Both statements (i) and (ii) are correct</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">16</td><td class="question"> Which of the following is a time robber?</td><td>Interruptions by people without appointments</td><td>Interruptions by people without appointments</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">17</td><td class="question"> Which of the following comes under important and urgent tasks?</td><td>Emergencies, complaints and crisis issues </td><td>Emergencies, complaints and crisis issues </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">18</td><td class="question"> Which of the following comes under non-urgent but important tasks?</td><td>Thinking, creating, modelling the data </td><td>Thinking, creating, modelling the data </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">19</td><td class="question"> Which of the following comes under non-important but urgent tasks?</td><td>Misunderstandings appearing in work </td><td>Misunderstandings appearing in work </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">20</td><td class="question"> Which of the following statement is not correct about time management? </td><td>Time management is applicable to senior management staff only</td><td>Time Management refers to managing time effectively so that the right time is allocated to the right activity</td><td class="incorrect">Incorrect</td><td>0</td></tr><tr><td class="number">21</td><td class="question"> First aid for fainting doesn’t include:</td><td>Tighten clothing (neck ties, collars, belts etc.)</td><td>Tighten clothing (neck ties, collars, belts etc.)</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">22</td><td class="question"> Which of the following statement about emergency evacuation is not correct?</td><td>Safety is only team leader’s or supervisor’s responsibility</td><td>Safety is only team leader’s or supervisor’s responsibility</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">23</td><td class="question"> In case of medical emergency, you should:</td><td>Not restrain the victim </td><td>Not restrain the victim </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">24</td><td class="question"> Unfortunately a fire breaks in your company and everyone is running to the safe area. You are outside the building. What will you do in such case? </td><td>Go to the safe area too</td><td>Go to the safe area too</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">25</td><td class="question"> The names are being called out at the safe area by your Team Leader. You realize one of your friends from another team is still in the building, but your Team Leader doesn’t know because he is not from your team. How should you act in the situation?</td><td>Inform your supervisor</td><td>Inform your supervisor</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">26</td><td class="question"> Which of the following is the correct first aid for fainting?</td><td>Check the victim’s airway to ensure it is clear </td><td>Check the victim’s airway to ensure it is clear </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">27</td><td class="question"> Workstation Essentials doesn’t include:</td><td>Outside work environment </td><td>Outside work environment </td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">28</td><td class="question">  ……………… is displacement of one or more bones at a joint</td><td>Dislocation</td><td>Dislocation</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">29</td><td class="question"> What should be done in case of shocks?</td><td>Cover the victim to maintain body temperature</td><td>Cover the victim to maintain body temperature</td><td class="correct">Correct</td><td>2</td></tr><tr><td class="number">30</td><td class="question"> What should be done in case of muscle cramp?</td><td>Stretch out the affected muscle to counteract the cramp</td><td>Stretch out the affected muscle to counteract the cramp</td><td class="correct">Correct</td><td>2</td></tr></table></div></div>
+
+</body></html>
